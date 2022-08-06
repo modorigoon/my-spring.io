@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Server Sent Event Example.</title>
+    <script>
+        const eventSource = new EventSource("/server/resource")
+
+        eventSource.onopen = () => {
+            document.querySelector('#connection-status').innerHTML = 'Resource API connected.';
+        }
+
+        eventSource.onmessage = (event) => {
+            const data = event.data;
+            const resource = JSON.parse(data);
+            document.querySelector('#cpu-load').innerHTML = resource.cpuLoad;
+            document.querySelector('#total-mem').innerHTML = resource.totalMem + ' bytes'
+            document.querySelector('#free-mem').innerHTML = resource.freeMem + ' bytes'
+            document.querySelector('#last-updated').innerHTML = resource.time
+
+        }
+    </script>
+</head>
+<body style="margin-top: 20px;">
+<div id="connection-status" style="margin-bottom: 10px"></div>
+<table>
+    <tr>
+        <th>CPU Load</th>
+        <td id="cpu-load"></td>
+    </tr>
+    <tr>
+        <th>Total Mem</th>
+        <td id="total-mem"></td>
+    </tr>
+    <tr>
+        <th>Free Mem</th>
+        <td id="free-mem"></td>
+    </tr>
+    <tr>
+        <th>Last updated</th>
+        <td id="last-updated"></td>
+    </tr>
+</table>
+</body>
+</html>

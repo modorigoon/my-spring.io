@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    include:
+      - credentials
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+    s3:
+      bucket: test-bucket
